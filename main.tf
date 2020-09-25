@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 data "aws_ami" "example" {
-  most recent = true
+  most_recent = true
   owners      = ["self"]
  filter {
    name  = "name"
