@@ -12,6 +12,15 @@ provider "aws" {
   region = "us-east-1"
 }
 
+data "aws_ami" "example" {
+  most recent = true
+  owners      = ["self"]
+ filter {
+   name  = "name"
+   values = ["shafi-ubuntu-*"]
+  }
+}
+
 resource "aws_instance" "myawsserver" {
   ami = "ami-0b16724fe8e66e4ec"
   key_name = "shafi-cicd"
