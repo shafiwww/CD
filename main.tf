@@ -22,7 +22,7 @@ data "aws_ami" "example" {
 }
 
 resource "aws_instance" "myawsserver" {
-  ami = "ami-0b16724fe8e66e4ec"
+  ami = data.aws_ami.example.id
   key_name = "shafi-cicd"
   instance_type = "t2.micro"
 
@@ -32,7 +32,7 @@ resource "aws_instance" "myawsserver" {
     Env = "Prod"
   }
   provisioner "local-exec" {
-    command = "echo The servers IP address is ${self.public_ip} && echo ${self.private_ip} myawsserver >> /etc/hosts"
+    command = "echo ${self.public_ip} > /etc/ansible/hosts"
   }
  
 provisioner "remote-exec" {
