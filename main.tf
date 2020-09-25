@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket  = "techlanders-statefile"
+    bucket  = "shafiterraformbucket"
     key  = "terraform/state"
-    region = "us-east-2"
+    region = "us-east-1"
 #   access_key = "XXXXXXXXXXXXXXXXXXXXXX"
 #   secret_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   }
@@ -14,11 +14,12 @@ provider "aws" {
 
 resource "aws_instance" "myawsserver" {
   ami = "ami-0b16724fe8e66e4ec"
-  key_name = "gagan-cicd"
+  key_name = "shafi-cicd"
   instance_type = "t2.micro"
 
-  tags = {
-    Name = "Gagan-Ubuntu-Server"
+ 
+ tags = {
+    Name = "shafi-Ubuntu-Server"
     Env = "Prod"
   }
   provisioner "local-exec" {
@@ -27,13 +28,13 @@ resource "aws_instance" "myawsserver" {
  
 provisioner "remote-exec" {
     inline = [
-     "touch /tmp/gagandeep"
+     "touch /tmp/shafi"
      ]
  connection {
     type     = "ssh"
     user     = "ubuntu"
     insecure = "true"
-    private_key = "${file("/tmp/gagan-cicd.pem")}"
+    private_key = "${file("/tmp/shafi-cicd.pem")}"
     host     =  aws_instance.myawsserver.public_ip
   }
 }
